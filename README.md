@@ -65,9 +65,8 @@ DockerとDocker Composeがインストールされていない場合は、公式
 7. **DAGの追加**  
    DAG（Directed Acyclic Graph）は、Airflowでワークフローを定義するためのPythonスクリプトです。DAGを追加するには、`dags`ディレクトリにPythonスクリプトを配置します。
    
-## 各フォルダとファイルついて
-  AirflowをDockerで起動する際の基本的なフォルダ構成は以下のようになります。
-
+## 各フォルダとファイルついて  
+    AirflowをDockerで起動する際の基本的なフォルダ構成は以下のようになります。  
     ```sh
     airflow-docker/
     ├── dags/                   # DAGファイルを保存するフォルダ
@@ -78,36 +77,36 @@ DockerとDocker Composeがインストールされていない場合は、公式
     └── docker-compose.yml      # Docker Composeファイル
     ```
     
-- dags/:
-    AirflowのDAGファイル（Pythonスクリプト）を保存するフォルダです。
-    Airflowはこのフォルダ内のDAGを自動的に認識して、スケジュールに従って実行します。
-    例としてexample_dag.pyを作成し、DAGのサンプルコードを記述できます。
+- dags/:  
+    AirflowのDAGファイル（Pythonスクリプト）を保存するフォルダです。  
+    Airflowはこのフォルダ内のDAGを自動的に認識して、スケジュールに従って実行します。  
+    例としてexample_dag.pyを作成し、DAGのサンプルコードを記述できます。  
 
-- logs/:
-    各タスクの実行ログを保存するためのフォルダです。
-    DockerのAirflowコンテナがこのフォルダにログを出力するように設定されているため、ログの管理に利用します。
+- logs/:  
+    各タスクの実行ログを保存するためのフォルダです。  
+    DockerのAirflowコンテナがこのフォルダにログを出力するように設定されているため、ログの管理に利用します。  
 
 - plugins/:
-    カスタムのAirflowプラグイン（独自のオペレーター、フックなど）を保存するフォルダです。
-    必要に応じて独自のプラグインを作成して配置することで、Airflowに追加機能を提供できます。
+    カスタムのAirflowプラグイン（独自のオペレーター、フックなど）を保存するフォルダです。  
+    必要に応じて独自のプラグインを作成して配置することで、Airflowに追加機能を提供できます。  
 
 - .env:
-    環境変数ファイルで、AirflowやDocker Composeで必要な変数（例：ユーザーIDなど）を設定します。
-    AIRFLOW_UID=50000などの設定を行い、コンテナとローカルの権限問題を防ぐために使用します。
+    環境変数ファイルで、AirflowやDocker Composeで必要な変数（例：ユーザーIDなど）を設定します。  
+    AIRFLOW_UID=50000などの設定を行い、コンテナとローカルの権限問題を防ぐために使用します。  
 
 - docker-compose.yml:
-    Docker Composeの設定ファイルで、AirflowやPostgres、Redisのコンテナ設定を管理します。
-    コンテナの起動順序や依存関係、ポート、ボリュームの設定などが記載されています。
+    Docker Composeの設定ファイルで、AirflowやPostgres、Redisのコンテナ設定を管理します。  
+    コンテナの起動順序や依存関係、ポート、ボリュームの設定などが記載されています。  
 
 
 ## Airflowの構築手順
 
-1. **準備**
-    AirflowをDocker上で実行するためには、DockerとDocker Composeがインストールされている必要があります。
+1. **準備**  
+    AirflowをDocker上で実行するためには、DockerとDocker Composeがインストールされている必要があります。  
 
-2. **ディレクトリとファイルの準備**
-    任意のディレクトリ（例: airflow-docker）を作成し、その中に必要なファイルを準備します。
-    以下の3つのファイルを作成します。
+2. **ディレクトリとファイルの準備**  
+    任意のディレクトリ（例: airflow-docker）を作成し、その中に必要なファイルを準備します。  
+    以下の3つのファイルを作成します。  
 
     ```sh
     airflow-docker/
@@ -116,9 +115,9 @@ DockerとDocker Composeがインストールされていない場合は、公式
     └── docker-compose.yml      # Docker Composeファイル
     ```
 
-3. **docker-compose.ymlの内容**
-    以下の内容でdocker-compose.ymlファイルを作成します。
-    このファイルでは、Postgres、Redis、Airflow Webserver、Airflow Schedulerの4つのサービスを定義しています。
+3. **docker-compose.ymlの内容**  
+    以下の内容でdocker-compose.ymlファイルを作成します。  
+    このファイルでは、Postgres、Redis、Airflow Webserver、Airflow Schedulerの4つのサービスを定義しています。  
 
     ```sh
     version: '3'
@@ -174,31 +173,30 @@ DockerとDocker Composeがインストールされていない場合は、公式
     postgres_data:
     ```
 
-
-4. **環境変数ファイル（.env）**
-    .envファイルにはAirflowの環境変数を設定します。以下のように作成します。
+4. **環境変数ファイル（.env）**  
+    .envファイルにはAirflowの環境変数を設定します。以下のように作成します。  
     ```sh
     AIRFLOW_UID=50000
     ```
 
-    ※ Airflow UIDは、Airflowコンテナ内のユーザーIDです。ローカルユーザーと一致させることで、ファイルのアクセス権限に問題が発生しにくくなります。50000は一般的に使用されるUIDですが、環境に応じて変更してください。
+    ※ Airflow UIDは、Airflowコンテナ内のユーザーIDです。ローカルユーザーと一致させることで、ファイルのアクセス権限に問題が発生しにくくなります。50000は一般的に使用されるUIDですが、環境に応じて変更してください。  
 
-5. **DAGファイルの配置**
-    AirflowのDAGファイルを配置するためのdagsフォルダを作成します。このフォルダにDAGファイル（Pythonスクリプト）を配置すると、Airflowが自動的に認識して実行可能になります。
+5. **DAGファイルの配置**  
+    AirflowのDAGファイルを配置するためのdagsフォルダを作成します。このフォルダにDAGファイル（Pythonスクリプト）を配置すると、Airflowが自動的に認識して実行可能になります。  
 
-6. **Airflowの初期化と起動**
-    以下のコマンドを使って、Airflow環境を初期化し、起動します。
+6. **Airflowの初期化と起動**  
+    以下のコマンドを使って、Airflow環境を初期化し、起動します。  
     ```sh
     ## ディレクトリをairflow-dockerに移動
     cd airflow-docker
     ```
 
-    ## Airflowの初期化（データベースやユーザー設定の初期化）
+    ## Airflowの初期化（データベースやユーザー設定の初期化）  
     ```sh
     docker-compose run airflow-webserver airflow db init
     ```
 
-    ## 初期ユーザー（adminユーザー）を作成
+    ## 初期ユーザー（adminユーザー）を作成  
     ```sh
     docker-compose run airflow-webserver airflow users create \
         --username airflow \
@@ -209,17 +207,17 @@ DockerとDocker Composeがインストールされていない場合は、公式
         --password airflow
     ```
 
-    ## Airflowの起動
+    ## Airflowの起動  
     ```sh
     docker-compose up -d
     ```
 
-7. **AirflowのWebインターフェースにアクセス**
-    Airflowが起動したら、ブラウザから[http://localhost:8080](http://localhost:8080)にアクセスします。
-    上記で作成したユーザー名とパスワード（airflow / airflow）でログインできます。
+7. **AirflowのWebインターフェースにアクセス**  
+    Airflowが起動したら、ブラウザから[http://localhost:8080](http://localhost:8080)にアクセスします。  
+    上記で作成したユーザー名とパスワード（airflow / airflow）でログインできます。  
 
-8. **停止と再起動**
-    Airflowを停止する場合は、以下のコマンドを実行します。
+8. **停止と再起動**  
+    Airflowを停止する場合は、以下のコマンドを実行します。  
 
     ```sh
     docker-compose down
