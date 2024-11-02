@@ -103,11 +103,11 @@ DockerとDocker Composeがインストールされていない場合は、公式
 ## Airflowの構築手順
 
 1. **準備**
-  AirflowをDocker上で実行するためには、DockerとDocker Composeがインストールされている必要があります。
+    AirflowをDocker上で実行するためには、DockerとDocker Composeがインストールされている必要があります。
 
 2. **ディレクトリとファイルの準備**
-  任意のディレクトリ（例: airflow-docker）を作成し、その中に必要なファイルを準備します。
-  以下の3つのファイルを作成します。
+    任意のディレクトリ（例: airflow-docker）を作成し、その中に必要なファイルを準備します。
+    以下の3つのファイルを作成します。
 
     ```sh
     airflow-docker/
@@ -117,30 +117,30 @@ DockerとDocker Composeがインストールされていない場合は、公式
     ```
 
 3. **docker-compose.ymlの内容**
-  以下の内容でdocker-compose.ymlファイルを作成します。
-  このファイルでは、Postgres、Redis、Airflow Webserver、Airflow Schedulerの4つのサービスを定義しています。
+    以下の内容でdocker-compose.ymlファイルを作成します。
+    このファイルでは、Postgres、Redis、Airflow Webserver、Airflow Schedulerの4つのサービスを定義しています。
 
-  ```sh
-  version: '3'
-  services:
+    ```sh
+    version: '3'
+    services:
     postgres:
-      image: postgres:13
-      environment:
+        image: postgres:13
+        environment:
         POSTGRES_USER: airflow
         POSTGRES_PASSWORD: airflow
         POSTGRES_DB: airflow
-      volumes:
+        volumes:
         - postgres_data:/var/lib/postgresql/data
 
     redis:
-      image: redis:latest
+        image: redis:latest
 
     airflow-webserver:
-      image: apache/airflow:2.7.1
-      depends_on:
+        image: apache/airflow:2.7.1
+        depends_on:
         - postgres
         - redis
-      environment:
+        environment:
         AIRFLOW__CORE__EXECUTOR: CeleryExecutor
         AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
         AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
@@ -150,78 +150,77 @@ DockerとDocker Composeがインストールされていない場合は、公式
         AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
         _AIRFLOW_WWW_USER_USERNAME: airflow
         _AIRFLOW_WWW_USER_PASSWORD: airflow
-      volumes:
+        volumes:
         - ./dags:/opt/airflow/dags
-      ports:
+        ports:
         - "8080:8080"
-      command: webserver
+        command: webserver
 
     airflow-scheduler:
-      image: apache/airflow:2.7.1
-      depends_on:
+        image: apache/airflow:2.7.1
+        depends_on:
         - postgres
         - redis
-      environment:
+        environment:
         AIRFLOW__CORE__EXECUTOR: CeleryExecutor
         AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
         AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
         AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
-      volumes:
+        volumes:
         - ./dags:/opt/airflow/dags
-      command: scheduler
+        command: scheduler
 
-  volumes:
+    volumes:
     postgres_data:
-  ```
+    ```
 
 
 4. **環境変数ファイル（.env）**
-  .envファイルにはAirflowの環境変数を設定します。以下のように作成します。
-  ```sh
-  AIRFLOW_UID=50000
-  ```
+    .envファイルにはAirflowの環境変数を設定します。以下のように作成します。
+    ```sh
+    AIRFLOW_UID=50000
+    ```
 
-  ※ Airflow UIDは、Airflowコンテナ内のユーザーIDです。ローカルユーザーと一致させることで、ファイルのアクセス権限に問題が発生しにくくなります。50000は一般的に使用されるUIDですが、環境に応じて変更してください。
+    ※ Airflow UIDは、Airflowコンテナ内のユーザーIDです。ローカルユーザーと一致させることで、ファイルのアクセス権限に問題が発生しにくくなります。50000は一般的に使用されるUIDですが、環境に応じて変更してください。
 
 5. **DAGファイルの配置**
-  AirflowのDAGファイルを配置するためのdagsフォルダを作成します。このフォルダにDAGファイル（Pythonスクリプト）を配置すると、Airflowが自動的に認識して実行可能になります。
+    AirflowのDAGファイルを配置するためのdagsフォルダを作成します。このフォルダにDAGファイル（Pythonスクリプト）を配置すると、Airflowが自動的に認識して実行可能になります。
 
 6. **Airflowの初期化と起動**
-  以下のコマンドを使って、Airflow環境を初期化し、起動します。
-  ```sh
-  ## ディレクトリをairflow-dockerに移動
-  cd airflow-docker
-  ```
+    以下のコマンドを使って、Airflow環境を初期化し、起動します。
+    ```sh
+    ## ディレクトリをairflow-dockerに移動
+    cd airflow-docker
+    ```
 
-  ## Airflowの初期化（データベースやユーザー設定の初期化）
-  ```sh
-  docker-compose run airflow-webserver airflow db init
-  ```
+    ## Airflowの初期化（データベースやユーザー設定の初期化）
+    ```sh
+    docker-compose run airflow-webserver airflow db init
+    ```
 
-  ## 初期ユーザー（adminユーザー）を作成
-  ```sh
-  docker-compose run airflow-webserver airflow users create \
-      --username airflow \
-      --firstname Airflow \
-      --lastname Admin \
-      --role Admin \
-      --email admin@example.com \
-      --password airflow
-  ```
+    ## 初期ユーザー（adminユーザー）を作成
+    ```sh
+    docker-compose run airflow-webserver airflow users create \
+        --username airflow \
+        --firstname Airflow \
+        --lastname Admin \
+        --role Admin \
+        --email admin@example.com \
+        --password airflow
+    ```
 
-  ## Airflowの起動
-  ```sh
-  docker-compose up -d
-  ```
+    ## Airflowの起動
+    ```sh
+    docker-compose up -d
+    ```
 
 7. **AirflowのWebインターフェースにアクセス**
-  Airflowが起動したら、ブラウザから[http://localhost:8080](http://localhost:8080)にアクセスします。
-  上記で作成したユーザー名とパスワード（airflow / airflow）でログインできます。
+    Airflowが起動したら、ブラウザから[http://localhost:8080](http://localhost:8080)にアクセスします。
+    上記で作成したユーザー名とパスワード（airflow / airflow）でログインできます。
 
 8. **停止と再起動**
-  Airflowを停止する場合は、以下のコマンドを実行します。
+    Airflowを停止する場合は、以下のコマンドを実行します。
 
-  ```sh
-  docker-compose down
-  ```
-
+    ```sh
+    docker-compose down
+    ```
