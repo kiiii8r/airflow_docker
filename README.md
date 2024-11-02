@@ -77,24 +77,24 @@ DockerとDocker Composeがインストールされていない場合は、公式
     └── docker-compose.yml      # Docker Composeファイル
     ```
     
-- dags/:  
+- dags/  
     AirflowのDAGファイル（Pythonスクリプト）を保存するフォルダです。  
     Airflowはこのフォルダ内のDAGを自動的に認識して、スケジュールに従って実行します。  
     例としてexample_dag.pyを作成し、DAGのサンプルコードを記述できます。  
 
-- logs/:  
+- logs/  
     各タスクの実行ログを保存するためのフォルダです。  
     DockerのAirflowコンテナがこのフォルダにログを出力するように設定されているため、ログの管理に利用します。  
 
-- plugins/:
+- plugins/
     カスタムのAirflowプラグイン（独自のオペレーター、フックなど）を保存するフォルダです。  
     必要に応じて独自のプラグインを作成して配置することで、Airflowに追加機能を提供できます。  
 
-- .env:
+- .env
     環境変数ファイルで、AirflowやDocker Composeで必要な変数（例：ユーザーIDなど）を設定します。  
     AIRFLOW_UID=50000などの設定を行い、コンテナとローカルの権限問題を防ぐために使用します。  
 
-- docker-compose.yml:
+- docker-compose.yml
     Docker Composeの設定ファイルで、AirflowやPostgres、Redisのコンテナ設定を管理します。  
     コンテナの起動順序や依存関係、ポート、ボリュームの設定などが記載されています。  
 
