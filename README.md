@@ -1,16 +1,16 @@
 # Airflow_Docker について
 AirflowをDockerで簡単に構築するためのリポジトリです。
 
-### Airflowのバージョン
+## Airflowのバージョン
 Apache Airflow 2.1.2
 
-### Dockerイメージ
+## Dockerイメージ
 Dockerイメージは、Docker Hubのapache/airflowを使用しています。
 
-### Apache Airflow
+## Apache Airflow
 Apache Airflowは、ワークフローのスケジューリングとモニタリングを行うためのプラットフォームです。Airflowは、Pythonで記述されたワークフローをDAG（Directed Acyclic Graph）として定義し、スケジュールに従って実行します。
 
-### 前提条件
+## 前提条件
 このリポジトリを使用するには、以下のソフトウェアがインストールされている必要があります。
 
 - Docker
@@ -25,7 +25,7 @@ https://docs.docker.com/get-docker/
 https://docs.docker.com/compose/install/
 
 
-### Airflowの実行手順
+## Airflowの実行手順
 以下の手順で、AirflowをDockerで構築します。
 
 1. リポジトリのクローン
@@ -69,7 +69,7 @@ docker-compose up -d
 DAG（Directed Acyclic Graph）は、Airflowでワークフローを定義するためのPythonスクリプトです。DAGを追加するには、dagsディレクトリにPythonスクリプトを配置します。
 
 
-### 各フォルダとファイルついて
+## 各フォルダとファイルついて
 AirflowをDockerで起動する際の基本的なフォルダ構成は以下のようになります。
 
 airflow-docker/
@@ -102,7 +102,7 @@ Docker Composeの設定ファイルで、AirflowやPostgres、Redisのコンテ�
 コンテナの起動順序や依存関係、ポート、ボリュームの設定などが記載されています。
 
 
-### Airflowの構築手順
+## Airflowの構築手順
 
 1. 準備
 AirflowをDocker上で実行するためには、DockerとDocker Composeがインストールされている必要があります。
@@ -190,16 +190,16 @@ AirflowのDAGファイルを配置するためのdagsフォルダを作成しま
 6. Airflowの初期化と起動
 以下のコマンドを使って、Airflow環境を初期化し、起動します。
 '''
-### ディレクトリをairflow-dockerに移動
+## ディレクトリをairflow-dockerに移動
 cd airflow-docker
 '''
 
-### Airflowの初期化（データベースやユーザー設定の初期化）
+## Airflowの初期化（データベースやユーザー設定の初期化）
 '''
 docker-compose run airflow-webserver airflow db init
 '''
 
-### 初期ユーザー（adminユーザー）を作成
+## 初期ユーザー（adminユーザー）を作成
 '''
 docker-compose run airflow-webserver airflow users create \
     --username airflow \
@@ -210,7 +210,7 @@ docker-compose run airflow-webserver airflow users create \
     --password airflow
 '''
 
-### Airflowの起動
+## Airflowの起動
 '''
 docker-compose up -d
 '''
