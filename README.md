@@ -66,7 +66,7 @@ DockerとDocker Composeがインストールされていない場合は、公式
    DAG（Directed Acyclic Graph）は、Airflowでワークフローを定義するためのPythonスクリプトです。DAGを追加するには、`dags`ディレクトリにPythonスクリプトを配置します。
    
 ## 各フォルダとファイルついて  
-    AirflowをDockerで起動する際の基本的なフォルダ構成は以下のようになります。 
+    AirflowをDockerで起動する際の基本的なフォルダ構成は以下のようになります。  
     
     ```sh
     airflow-docker/
